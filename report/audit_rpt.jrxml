@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="audit_rpt" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a67f09f-102a-4eec-a4f2-b41952dd1df7">
+	<property name="ireport.zoom" value="1.210000000000018"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     dr.`id` AS dr_id,
+     dr.`deliver_to` AS dr_deliver_to,
+     dr.`address` AS dr_address,
+     dr.`plate` AS dr_plate,
+     dr.`type` AS dr_type,
+     dr.`date` AS dr_date,
+     item.`description` AS item_description,
+     item.`quantity` AS item_quantity,
+     item.`unit` AS item_unit,
+     dr.`name` AS dr_name,
+     dr.`auditor` AS dr_auditor,
+     dr.`approver` AS dr_approver,
+     dr.`remarks` AS dr_remarks
+FROM
+     `dr` dr LEFT JOIN `dr_item` dr_item ON dr.`id` = dr_item.`dr`
+     LEFT JOIN `item` item ON dr_item.`item` = item.`id`
+WHERE date BETWEEN $P{startDate} AND $P{endDate}
+ORDER BY dr.id DESC]]>
+	</queryString>
+	<field name="dr_id" class="java.lang.Integer"/>
+	<field name="dr_deliver_to" class="java.lang.String"/>
+	<field name="dr_address" class="java.lang.String"/>
+	<field name="dr_plate" class="java.lang.String"/>
+	<field name="dr_type" class="java.lang.String"/>
+	<field name="dr_date" class="java.sql.Date"/>
+	<field name="item_description" class="java.lang.String"/>
+	<field name="item_quantity" class="java.lang.Double"/>
+	<field name="item_unit" class="java.lang.String"/>
+	<field name="dr_name" class="java.lang.String"/>
+	<field name="dr_auditor" class="java.lang.String"/>
+	<field name="dr_approver" class="java.lang.String"/>
+	<field name="dr_remarks" class="java.lang.String"/>
+	<group name="mdr_number">
+		<groupExpression><![CDATA[$F{dr_id}]]></groupExpression>
+		<groupHeader>
+			<band height="75">
+				<textField pattern="000000" isBlankWhenNull="true">
+					<reportElement x="60" y="5" width="100" height="12" uuid="c6442bc3-9dd5-4a76-bf87-19ae0f17c761"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_id}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="5" width="60" height="12" uuid="314e257c-682d-481a-be49-8da1ec9de609"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MDR NUMBER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="41" width="60" height="12" uuid="e1e985c1-763a-4865-888b-a1ab635fa978"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Address]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="mdr_number" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="60" y="29" width="298" height="12" uuid="ea630b50-19d8-4675-b801-eb27e004cf07"/>
+					<textElement>
+						<font size="8" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_deliver_to}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="29" width="60" height="12" uuid="0dd7850c-822e-4f22-a0d1-f2df2e739587"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Deliver To ]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="mdr_number" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="60" y="41" width="298" height="12" uuid="218751d9-c3a9-46a2-8b25-dc03dbe82b5d"/>
+					<textElement>
+						<font size="8" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_address}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="17" width="60" height="12" uuid="9db53d9f-3c7f-4297-9ccf-0b28fd3826ce"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date    ]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="mdr_number" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="446" y="29" width="121" height="12" uuid="23c83c22-40f1-403c-94c1-ad98c74740d8"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_plate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="383" y="29" width="63" height="12" uuid="55112422-c1c0-412b-84a3-9e45b0c33f81"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Plate No.:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="mdr_number" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="60" y="17" width="79" height="12" uuid="f11c9cb3-67c0-4a51-a3c5-5cfb28f9a4c6"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="42" y="62" width="74" height="12" uuid="51c35cb4-b907-48b9-8bb3-d3bf74511205"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UoM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="2" y="62" width="39" height="12" uuid="eb181a16-56df-45ec-bf87-38646b19440d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[QTY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="117" y="62" width="396" height="12" uuid="d28c2d6f-9798-4080-88e3-b084f56dff2f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIPTION]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="62" width="1" height="12" uuid="030c7629-0d53-4bfc-9186-ea9b783a5e0a"/>
+				</line>
+				<line>
+					<reportElement x="41" y="62" width="1" height="12" uuid="80aa69d7-a1a2-482a-81ed-e112dd20a087"/>
+				</line>
+				<line>
+					<reportElement x="116" y="62" width="1" height="12" uuid="f4886a25-e6cc-4cdb-8d4e-a0094a96d106"/>
+				</line>
+				<line>
+					<reportElement x="0" y="62" width="572" height="1" uuid="e373dd08-2a43-4424-a27c-a8118936c240"/>
+				</line>
+				<line>
+					<reportElement x="571" y="62" width="1" height="12" uuid="19eeafd1-f026-423a-94ec-5cea9a8c8773"/>
+				</line>
+				<line>
+					<reportElement x="0" y="73" width="572" height="1" uuid="ffd766b2-b7b7-4235-ae8e-d7b3785eec56"/>
+				</line>
+				<staticText>
+					<reportElement x="383" y="17" width="63" height="12" uuid="8f78b52a-e0ae-4d63-a8c7-8511e386016a"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Delivery Truck:]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="mdr_number" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="446" y="17" width="121" height="12" uuid="1c780c29-1a78-4373-84ed-e2a2adf73e1a"/>
+					<textElement>
+						<font size="8" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_type}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="383" y="41" width="63" height="12" uuid="1a61c8de-8571-4cb1-aea6-db6bb9f74b33"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Prepared By:]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="mdr_number">
+					<reportElement isPrintRepeatedValues="false" x="446" y="41" width="100" height="12" uuid="de565c51-f900-4b79-a6e4-ed766a8856d3"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dr_name}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="108" splitType="Stretch">
+			<staticText>
+				<reportElement x="218" y="19" width="136" height="20" uuid="85f2da71-632e-4ebb-9621-635a571a3cdb"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Parañaque City, Philippines]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="101" y="-2" width="65" height="60" uuid="ffddd2e3-c022-4ebe-ab66-bc6792cbeb5d"/>
+				<imageExpression><![CDATA["C:\\xampp\\htdocs\\mdr\\assets\\img\\amwire_logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="190" y="41" width="193" height="20" uuid="f980285f-68c9-45a4-9439-a116fed7f1e4"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MDR Audit Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="-2" width="205" height="20" uuid="104418ae-65eb-4edb-9510-6c0f1d860a3e"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AMERICAN WIRE AND CABLE CO., INC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="8" width="171" height="16" uuid="a7f1854a-fc13-4313-ab29-a7b8029b5774"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[8508 Km. 16 South Superhighway]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="84" width="25" height="12" uuid="5cd13318-477e-49ce-a22e-1d78e771f0a3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="84" width="45" height="12" uuid="a1b451ea-52ac-41b0-aad9-7e3fe5b528de"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{startDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="70" y="84" width="15" height="12" uuid="6ed442b2-7c34-4575-bb64-433de52dd398"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="84" width="45" height="12" uuid="82de2d7e-ec14-4f99-b786-7d3c680f60e3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{endDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="472" y="84" width="100" height="12" uuid="d9b3dd68-0111-4e8d-b1aa-796848930ae5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="100" width="572" height="1" uuid="907e9252-9642-4853-be63-55111428c15e"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="12">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="130" y="0" width="373" height="12" isRemoveLineWhenBlank="true" uuid="09da9339-87cb-4400-8695-1966070ef290"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{item_description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="41" y="0" width="75" height="12" isRemoveLineWhenBlank="true" uuid="8b5d2167-bcdd-43c7-9cb4-ef833caea76b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{item_unit}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="41" height="12" isRemoveLineWhenBlank="true" uuid="96d4cc5c-83ad-4e23-8d58-c4fbc1fc8cb8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_quantity}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="218" y="38" width="80" height="12" uuid="9758f696-016d-4b8f-931f-2dcb9e45541c"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="298" y="38" width="40" height="12" uuid="4aa8e581-45ad-4fac-be7c-2fc8aa19bedc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
